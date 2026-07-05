@@ -1,9 +1,31 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
+import UseAuth from "../../hooks/useAuth";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { createUser } = UseAuth();
+  // console.log(createUser)
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
+    console.log(name, email, photo, password);
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="card bg-base-100 w-full p-6 max-w-lg mx-auto mt-30 shrink-0 shadow-2xl">
       <div className="card-body">
@@ -14,7 +36,7 @@ const Register = () => {
             Login Now
           </Link>
         </p>
-        <form action="">
+        <form onSubmit={handleRegister}>
           <fieldset className="fieldset">
             <label className="label">Name</label>
             <input
