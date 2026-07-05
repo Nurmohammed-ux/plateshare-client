@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  /* Define your theme variables here */
+  --color-primary: #632EE3;
+  --color-secondary: #9F62F2;
+}
+
+@layer utilities {
+  /* Define the gradient as a reusable background utility */
+  .bg-primary-gradient {
+    background: linear-gradient(to right, #632EE3, #9F62F2);
+  }
+  .text-gradient {
+    background: linear-gradient(to right, #632EE3, #9F62F2);
+    background-clip: text;
+    color: transparent; /* Makes the original text color invisible so the gradient shows */
+    display: inline-block; /* Required for the gradient to render correctly on text */
+  }
+}
+
+@layer utilities {
+  .bg-hero-gradient {
+    background: linear-gradient(
+      to right, 
+      color-mix(in srgb, #9F62F2 5%, transparent), 
+      color-mix(in srgb, #632EE3 25%, transparent)
+    );
+  }
+}
