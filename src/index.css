@@ -3,17 +3,17 @@
 
 @theme {
   /* Define your theme variables here */
-  --color-primary: #632EE3;
-  --color-secondary: #9F62F2;
+  --color-primary: #C1443C;
+  --color-secondary: #C1443C;
 }
 
 @layer utilities {
   /* Define the gradient as a reusable background utility */
   .bg-primary-gradient {
-    background: linear-gradient(to right, #632EE3, #9F62F2);
+    background: linear-gradient(to right, #C1443C, #bb817d);
   }
   .text-gradient {
-    background: linear-gradient(to right, #632EE3, #9F62F2);
+    background: linear-gradient(to right, #C1443C, #bb817d);
     background-clip: text;
     color: transparent; /* Makes the original text color invisible so the gradient shows */
     display: inline-block; /* Required for the gradient to render correctly on text */
@@ -24,8 +24,8 @@
   .bg-hero-gradient {
     background: linear-gradient(
       to right, 
-      color-mix(in srgb, #9F62F2 5%, transparent), 
-      color-mix(in srgb, #632EE3 25%, transparent)
+      color-mix(in srgb, #C1443C 5%, transparent), 
+      color-mix(in srgb, #C1443C 25%, transparent)
     );
   }
 }

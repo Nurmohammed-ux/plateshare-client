@@ -91,7 +91,7 @@ const Navbar = () => {
         ) : (
           <Link
             to={"/login"}
-            className="btn border border-primary text-base pt-1.5 font-semibold text-gradient"
+            className="btn border border-secondary text-base pt-1.5 font-semibold text-gradient"
           >
             Login
           </Link>

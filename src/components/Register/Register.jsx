@@ -5,11 +5,14 @@ import UseAuth from "../../hooks/useAuth";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser } = UseAuth();
+  const { createUser, signInWithGoogle } = UseAuth();
+  const [error, setError] = useState("");
   // console.log(createUser)
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setError("");
+
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -22,7 +25,18 @@ const Register = () => {
         console.log(result.user);
       })
       .catch((error) => {
-        console.log(error.message);
+        setError(error.message);
+      });
+  };
+
+  const HandleGoogleSignUp = (e) => {
+    e.preventDefault();
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        setError(error.message);
       });
   };
 
@@ -92,7 +106,10 @@ const Register = () => {
               <hr className="w-full text-gray-300" />
             </div>
             {/* Google */}
-            <button className="btn bg-white text-base text-black border-[#e5e5e5]">
+            <button
+              onClick={HandleGoogleSignUp}
+              className="btn bg-white text-base text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="18"
@@ -123,6 +140,9 @@ const Register = () => {
               Sign Up with Google
             </button>
           </fieldset>
+          {error && (
+            <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
+          )}
         </form>
       </div>
     </div>

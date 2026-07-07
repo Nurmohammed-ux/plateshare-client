@@ -1,9 +1,42 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
+import UseAuth from "../../hooks/useAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { loginUser, signInWithGoogle } = UseAuth();
+  const [error, setError] = useState("");
+
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    setError("");
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    loginUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const HandleGoogleSignIn = (e) => {
+    e.preventDefault();
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
   return (
     <div className="card bg-base-100 w-full p-6 max-w-lg mx-auto mt-30 shrink-0 shadow-2xl">
       <div className="card-body">
@@ -14,7 +47,7 @@ const Login = () => {
             Register Now
           </Link>
         </p>
-        <form action="">
+        <form onSubmit={handleLogIn}>
           <fieldset className="fieldset">
             <label className="label">Email</label>
             <input
@@ -59,7 +92,10 @@ const Login = () => {
               <hr className="w-full text-gray-300" />
             </div>
             {/* Google */}
-            <button className="btn bg-white text-base text-black border-[#e5e5e5]">
+            <button
+              onClick={HandleGoogleSignIn}
+              className="btn bg-white text-base text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="18"
@@ -90,6 +126,9 @@ const Login = () => {
               Login with Google
             </button>
           </fieldset>
+          {error && (
+            <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
+          )}
         </form>
       </div>
     </div>
