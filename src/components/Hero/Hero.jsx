@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 const Hero = () => {
   return (
-    <div className="hero bg-base-100 h-100 rounded-box">
+    <div className="hero bg-base-100 min-h-100 rounded-box">
       <div className="hero-content  flex-col justify-between lg:flex-row-reverse gap-12 py-16 lg:py-24">
         <img
           src="https://i.ibb.co.com/PZdckWfh/hero-banner.avif"
