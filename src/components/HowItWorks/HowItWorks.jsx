@@ -26,7 +26,7 @@ const HowItWorks = () => {
         <p className="badge badge-secondary badge-outline font-semibold mb-3">
           Three steps, no waste
         </p>
-        <h2 className="text-3xl md:text-4xl font-bold">How PlateShare works</h2>
+        <h2 className="text-3xl md:text-4xl font-bold">How <span className="text-secondary px-1">PlateShare</span> Works</h2>
         <p className="text-gray-600 mt-3">
           Every listing moves through the same simple path, from someone&apos;s
           kitchen to someone else&apos;s table.

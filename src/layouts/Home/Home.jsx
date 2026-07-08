@@ -4,6 +4,8 @@ import Hero from "../../components/Hero/Hero";
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
 import OurMission from "../../components/OurMission/OurMission";
 import CommunityImpact from "../../components/CommunityImpact/CommunityImpact";
+import Testimonials from "../../components/Testimonials/Testimonials";
+import Faq from "../../components/Faq/Faq";
 
 const Home = () => {
   return (
@@ -21,6 +23,8 @@ const Home = () => {
       <HowItWorks />
       <OurMission />
       <CommunityImpact />
+      <Testimonials />
+      <Faq />
     </div>
   );
 };

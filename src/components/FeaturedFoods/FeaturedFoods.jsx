@@ -19,7 +19,7 @@ const FeaturedFoods = () => {
       });
   }, [axios]);
   return (
-    <div>
+    <div className="px-3">
       <div className="text-center max-w-2xl mx-auto mb-12">
         <p className="badge badge-secondary badge-outline font-semibold mb-3">
           Featured right now
@@ -35,7 +35,7 @@ const FeaturedFoods = () => {
           <span className="loading loading-spinner loading-lg text-secondary"></span>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {foods.map((food) => (
             <FoodCart key={food._id} food={food} />
           ))}

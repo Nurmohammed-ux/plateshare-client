@@ -1,10 +1,8 @@
-
 import { Link, NavLink } from "react-router";
 import UseAuth from "../../hooks/useAuth";
 
-
 const Navbar = () => {
-  const { user } = UseAuth();
+  const { user, logOut } = UseAuth();
   // console.log(user);
   const getLinkClass = ({ isActive }) =>
     `font-semibold ${isActive ? "text-gradient text-base font-semibold px-2" : "text-gray-600 px-2 text-base font-semibold hover:text-gray-900"}`;
@@ -38,8 +36,16 @@ const Navbar = () => {
     </>
   );
 
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 px-4">
       <div className="navbar-start">
         {/* Logo */}
         <Link to="/" className="text-3xl font-bold">
@@ -83,7 +89,10 @@ const Navbar = () => {
               you might want to show them here instead */}
               <li className="lg:hidden">{links}</li>
 
-              <button className="text-gray-600 pl-2 pt-1 lg:pt-0 text-base font-semibold hover:text-red-400">
+              <button
+                onClick={handleLogOut}
+                className="text-gray-600 pl-2 pt-1 lg:pt-0 text-base font-semibold hover:text-red-400"
+              >
                 Logout
               </button>
             </ul>
