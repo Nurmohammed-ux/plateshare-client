@@ -20,7 +20,7 @@ const FAQS = [
 const Faq = () => {
   return (
     <div className="pb-10">
-      <div className="text-center max-w-2xl lg:max-w-4xl mx-auto mb-10">
+      <div className="text-center w-full mx-auto mb-10">
         <p className="badge badge-secondary badge-outline font-semibold mb-3">
           Good to know
         </p>

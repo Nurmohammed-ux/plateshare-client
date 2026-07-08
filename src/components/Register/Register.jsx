@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router";
 import UseAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +24,13 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your successfully register in PlateShare",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         setError(error.message);
@@ -34,6 +42,13 @@ const Register = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your successfully register in PlateShare",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         setError(error.message);

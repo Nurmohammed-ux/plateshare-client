@@ -7,9 +7,9 @@ const FeaturedFoods = () => {
   const axios = useAxios();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios("/featuredFoods")
+    axios.get("/featuredFoods")
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setFoods(result.data);
         setLoading(false)
       })

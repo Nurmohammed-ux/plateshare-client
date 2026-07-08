@@ -10,6 +10,7 @@ const FoodCart = ({ food }) => {
     pickup_location,
     pickup_time,
     expire_date,
+    donator,
   } = food;
   return (
     <div>
@@ -32,7 +33,16 @@ const FoodCart = ({ food }) => {
           <p className="text-sm flex items-center gap-2 text-gray-500">
             <IoLocationOutline /> {pickup_location}
           </p>
-          <p className="text-sm flex items-center gap-2 text-gray-500"><IoTimerOutline />  {pickup_time}</p>
+          <p className="text-sm flex items-center gap-2 text-gray-500">
+            <IoTimerOutline /> {pickup_time}
+          </p>
+          <h4>Donate By :</h4>
+          <div className="flex items-center justify-between">
+            <img className="w-8 h-8 rounded-full" src={donator.photo} alt={donator.name} />
+            <div>
+              <p className="font-medium">{donator.name}</p>
+            </div>
+          </div>
           <div className="card-actions justify-between items-center mt-2">
             <span className="text-xs font-mono text-gray-400">
               Use by {expire_date}

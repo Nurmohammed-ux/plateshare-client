@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router";
 import UseAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut } = UseAuth();
@@ -38,7 +39,15 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your successfully signout from PlateShare",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
       .catch((error) => {
         console.log(error.message);
       });
