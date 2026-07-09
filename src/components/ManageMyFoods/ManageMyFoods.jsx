@@ -42,7 +42,7 @@ const ManageMyFoods = () => {
   //         axiosSecure
   //           .delete(`/foods/${id}`)
   //           .then((result) => {
-  //             if (result.data.deletedCount > 0 || result.data.success) {
+  //             if (result.data.deletedCount > 0) {
   //               setFoods((prev) => prev.filter((food) => food._id !== id));
   //               Swal.fire(
   //                 "Deleted!",
@@ -65,12 +65,14 @@ const ManageMyFoods = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-14">
+    <div className="w-full mx-auto px-4 md:px-0 py-14">
       <div className="mb-10 flex flex-col items-center">
         <p className="badge badge-secondary text-base badge-outline font-semibold mb-3">
           Your listings
         </p>
-        <h1 className="text-3xl md:text-4xl font-bold">Manage My <span className="text-gradient">Foods</span></h1>
+        <h1 className="text-3xl md:text-4xl font-bold">
+          Manage My <span className="text-gradient">Foods</span>
+        </h1>
         <p className="text-gray-600 mt-2">
           Every item you've shared, in one place. Update the details or remove a
           listing once it's gone.
@@ -85,7 +87,7 @@ const ManageMyFoods = () => {
           </Link>
         </div>
       ) : (
-        <div className="overflow-x-auto bg-base-100 border border-base-200 rounded-box shadow-sm">
+        <div className="overflow-x-auto bg-base-100 border border-base-200 rounded-lg shadow-sm">
           <table className="table">
             <thead>
               <tr>
@@ -103,11 +105,13 @@ const ManageMyFoods = () => {
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="w-12 h-12 rounded-box">
-                          <img src={food.food_image} alt={food.food_name} />
-                        </div>
+                        <img
+                          className="w-12 h-10 rounded-box"
+                          src={food.food_image}
+                          alt={food.food_name}
+                        />
                       </div>
-                      <span className="font-semibold">{food.food_name}</span>
+                      <p className="font-semibold">{food.food_name}</p>
                     </div>
                   </td>
                   <td>
@@ -127,7 +131,7 @@ const ManageMyFoods = () => {
                     </span>
                   </td>
                   <td>
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end gap-2 lg:gap-4">
                       <Link
                         to={`/update-food/${food._id}`}
                         className="btn btn-sm btn-outline btn-secondary"
