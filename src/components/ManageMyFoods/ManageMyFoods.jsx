@@ -28,33 +28,39 @@ const ManageMyFoods = () => {
       .finally(() => setLoading(false));
   }, [axiosSecure, user?.email]);
 
-  //   const handleDelete = (id, foodName) => {
-  //     Swal.fire({
-  //       title: "Delete this listing?",
-  //       text: `"${foodName}" will be permanently removed.`,
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#d33",
-  //       cancelButtonColor: "#3085d6",
-  //       confirmButtonText: "Yes, delete it",
-  //     }).then((res) => {
-  //       if (res.isConfirmed) {
-  //         axiosSecure
-  //           .delete(`/foods/${id}`)
-  //           .then((result) => {
-  //             if (result.data.deletedCount > 0) {
-  //               setFoods((prev) => prev.filter((food) => food._id !== id));
-  //               Swal.fire(
-  //                 "Deleted!",
-  //                 "Your food listing has been removed.",
-  //                 "success",
-  //               );
-  //             }
-  //           })
-  //           .catch(() => toast.error("Failed to delete the listing"));
-  //       }
-  //     });
-  //   };
+  const handleDelete = (id, foodName) => {
+    Swal.fire({
+      title: "Delete this listing?",
+      text: `"${foodName}" will be permanently removed.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        axiosSecure
+          .delete(`/foods/${id}`)
+          .then((result) => {
+            if (result.data.deletedCount > 0) {
+              setFoods((prev) => prev.filter((food) => food._id !== id));
+              Swal.fire(
+                "Deleted!",
+                "Your food listing has been removed.",
+                "success",
+              );
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Failed to delete the listing",
+            });
+          });
+      }
+    });
+  };
 
   if (loading) {
     return (
@@ -82,7 +88,7 @@ const ManageMyFoods = () => {
       {foods.length === 0 ? (
         <div className="text-center py-20 bg-base-200 rounded-box">
           <p className="text-gray-500">You haven't added any food yet.</p>
-          <Link to="/addFood" className="btn btn-primary btn-sm mt-4">
+          <Link to="/addFood" className="btn btn-secondary btn-sm mt-4">
             Add your first food
           </Link>
         </div>
@@ -139,7 +145,7 @@ const ManageMyFoods = () => {
                         Update
                       </Link>
                       <button
-                        // onClick={() => handleDelete(food._id, food.food_name)}
+                        onClick={() => handleDelete(food._id, food.food_name)}
                         className="btn btn-sm font-medium btn-outline btn-error"
                       >
                         Delete
