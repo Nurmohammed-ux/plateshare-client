@@ -49,12 +49,28 @@ const AddFood = () => {
       setLoading(true);
       const food_image = await uploadImage(imageFile);
 
+      const formatTime = (time) => {
+        const [hour, minute] = time.split(":");
+
+        const date = new Date();
+        date.setHours(Number(hour));
+        date.setMinutes(Number(minute));
+
+        return date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+      };
+      const pickup_time = `${formatTime(form.pickup_start.value)} - ${formatTime(form.pickup_end.value)}`;
+
       const food = {
         food_name: form.food_name.value,
         food_image,
         quantity: Number(form.quantity.value),
         quantity_unit: form.quantity_unit.value,
         pickup_location: form.pickup_location.value,
+        pickup_time: pickup_time,
         expire_date: form.expire_date.value,
         notes: form.notes.value,
         status: "available",
@@ -82,7 +98,7 @@ const AddFood = () => {
         });
         form.reset();
         setImageFile(null);
-        navigate("/");
+        navigate("/addFood");
       }
     } catch (err) {
       console.error(err);
@@ -212,6 +228,31 @@ const AddFood = () => {
             required
             className="input input-bordered w-full"
           />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="font-semibold text-sm mb-1 block">
+              Pickup Start Time
+            </label>
+            <input
+              type="time"
+              name="pickup_start"
+              required
+              className="input input-bordered w-full"
+            />
+          </div>
+
+          <div>
+            <label className="font-semibold text-sm mb-1 block">
+              Pickup End Time
+            </label>
+            <input
+              type="time"
+              name="pickup_end"
+              required
+              className="input input-bordered w-full"
+            />
+          </div>
         </div>
 
         {/* Expire date */}

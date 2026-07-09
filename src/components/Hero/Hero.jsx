@@ -29,15 +29,9 @@ const Hero = () => {
           <div className="flex flex-wrap my-4 gap-3 justify-center lg:justify-start">
             <Link
               to="/availableFoods"
-              className="btn bg-primary-gradient text-white font-semibold px-6"
-            >
-              Search Food
-            </Link>
-            <Link
-              to="/availableFoods"
               className="btn btn-outline btn-secondary px-6"
             >
-              View All Foods
+              Search Food
             </Link>
           </div>
 

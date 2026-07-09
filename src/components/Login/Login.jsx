@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import UseAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
@@ -8,6 +8,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { loginUser, signInWithGoogle } = UseAuth();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogIn = (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         setError(error.message);
@@ -46,6 +49,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         setError(error.message);
