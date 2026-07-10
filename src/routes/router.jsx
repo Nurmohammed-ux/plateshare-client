@@ -7,6 +7,8 @@ import AvailableFoods from "../layouts/AvailableFoods/AvailableFoods";
 import AddFood from "../components/AddFood/AddFood";
 import PrivateRoute from "./PrivateRoute";
 import ManageMyFoods from "../components/ManageMyFoods/ManageMyFoods";
+import UpdateFood from "../components/UpdateFood/UpdateFood";
+import Error from "../components/Error/Error";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,18 @@ const router = createBrowserRouter([
             <ManageMyFoods />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/update-food/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateFood />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "*",
+        element: <Error />,
       },
     ],
   },

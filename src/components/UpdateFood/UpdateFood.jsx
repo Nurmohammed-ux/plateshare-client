@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import UseAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const QUANTITY_UNITS = [
   "Servings",
@@ -15,17 +14,35 @@ const QUANTITY_UNITS = [
   "People",
 ];
 
-const AddFood = () => {
-  const { user } = UseAuth();
+const UpdateFood = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-
+  const [food, setFood] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [imageFile, setImageFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const today = new Date().toISOString().split("T")[0]; // prevents picking a past expire date
+  const today = new Date().toISOString().split("T")[0];
 
-  // Uploads the selected image to imgbb and returns the hosted display URL.
+  useEffect(() => {
+    axiosSecure
+      .get(`/foods/${id}`)
+      .then((res) => {
+        setFood(res.data);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to load this food listing",
+        });
+      })
+      .finally(() => setLoading(false));
+  }, [axiosSecure, id]);
+
+  // Only re-uploads to imgbb if the user picked a new image; otherwise keeps the old URL.
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
@@ -37,68 +54,43 @@ const AddFood = () => {
     return data.data.display_url;
   };
 
-  const handleAddFood = async (e) => {
+  const handleUpdateFood = async (e) => {
     e.preventDefault();
     const form = e.target;
 
-    if (!imageFile) {
-      return Swal.fire("Please select a food image");
-    }
-
     try {
-      setLoading(true);
-      const food_image = await uploadImage(imageFile);
+      setSaving(true);
 
-      const formatTime = (time) => {
-        const [hour, minute] = time.split(":");
+      let food_image = food.food_image;
+      if (imageFile) {
+        setUploading(true);
+        food_image = await uploadImage(imageFile);
+        setUploading(false);
+      }
 
-        const date = new Date();
-        date.setHours(Number(hour));
-        date.setMinutes(Number(minute));
-
-        return date.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        });
-      };
-      const pickup_time = `${formatTime(form.pickup_start.value)} - ${formatTime(form.pickup_end.value)}`;
-
-      const food = {
+      const updatedFood = {
         food_name: form.food_name.value,
         food_image,
         quantity: Number(form.quantity.value),
         quantity_unit: form.quantity_unit.value,
         pickup_location: form.pickup_location.value,
-        pickup_time: pickup_time,
         expire_date: form.expire_date.value,
         notes: form.notes.value,
-        status: "available",
-        donator: {
-          name: user?.displayName,
-          email: user?.email,
-          image: user?.photoURL,
-        },
-        request_count: 0,
-        requested_by: null,
-        featured: false,
-        created_at: new Date().toISOString(),
+        status: form.status.value,
         updated_at: new Date().toISOString(),
       };
 
-      const result = await axiosSecure.post("/foods", food);
+      const res = await axiosSecure.patch(`/foods/${id}`, updatedFood);
 
-      if (result.data.insertedId) {
+      if (res.data.matchedCount > 0) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Food added successfully!",
+          title: "Food listing updated!",
           showConfirmButton: false,
           timer: 1500,
         });
-        form.reset();
-        setImageFile(null);
-        navigate("/addFood");
+        navigate("/manageMyFoods");
       }
     } catch (err) {
       console.error(err);
@@ -110,14 +102,23 @@ const AddFood = () => {
         timer: 1500,
       });
     } finally {
-      setLoading(false);
+      setUploading(false);
+      setSaving(false);
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center py-16">
-        <span className="loading loading-spinner loading-lg text-secondary"></span>
+      <div className="flex justify-center py-24">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
+
+  if (!food) {
+    return (
+      <div className="text-center py-24 text-gray-500">
+        Food listing not found.
       </div>
     );
   }
@@ -126,48 +127,25 @@ const AddFood = () => {
     <div className="max-w-3xl mx-auto px-4 py-14">
       <div className="text-center mb-10">
         <p className="badge badge-secondary text-base badge-outline font-semibold mb-3">
-          Share your surplus
+          Editing listing
         </p>
-        <h1 className="text-3xl md:text-4xl font-bold">
-          Add <span className="text-gradient">Food</span>
-        </h1>
+        <h1 className="text-3xl md:text-4xl font-bold">Update Food</h1>
         <p className="text-gray-600 mt-2">
-          Fill in the details below so a neighbour nearby can find and collect
-          it.
+          Make your changes below and save to update this listing.
         </p>
       </div>
 
       <form
-        onSubmit={handleAddFood}
+        onSubmit={handleUpdateFood}
         className="card bg-base-100 shadow-sm border border-base-200 p-6 md:p-8 space-y-5"
       >
-        {/* Donator info — auto-filled from the logged-in Firebase user, read-only */}
-        <div className="flex items-center gap-3 bg-base-200 rounded-box p-4">
-          <div className="avatar">
-            <div className="w-12 rounded-full">
-              <img
-                src={
-                  user?.photoURL ||
-                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                }
-                alt="Donator"
-              />
-            </div>
-          </div>
-          <div>
-            <p className="font-semibold text-sm">{user?.displayName}</p>
-            <p className="text-xs text-gray-500">{user?.email}</p>
-          </div>
-          <span className="badge badge-ghost ml-auto text-xs">Donator</span>
-        </div>
-
         {/* Food name */}
         <div>
           <label className="font-semibold text-sm mb-1 block">Food Name</label>
           <input
             type="text"
             name="food_name"
-            placeholder="e.g. Beef Curry"
+            defaultValue={food.food_name}
             required
             className="input input-bordered w-full"
           />
@@ -180,9 +158,11 @@ const AddFood = () => {
             type="file"
             accept="image/*"
             onChange={(e) => setImageFile(e.target.files[0])}
-            required
             className="file-input file-input-bordered w-full"
           />
+          <p className="text-xs text-gray-500 mt-1">
+            Leave empty to keep the current image.
+          </p>
         </div>
 
         {/* Quantity */}
@@ -195,7 +175,7 @@ const AddFood = () => {
               type="number"
               name="quantity"
               min="1"
-              placeholder="e.g. 5"
+              defaultValue={food.quantity}
               required
               className="input input-bordered w-full"
             />
@@ -204,6 +184,7 @@ const AddFood = () => {
             <label className="font-semibold text-sm mb-1 block">Unit</label>
             <select
               name="quantity_unit"
+              defaultValue={food.quantity_unit}
               className="select select-bordered w-full"
               required
             >
@@ -224,35 +205,10 @@ const AddFood = () => {
           <input
             type="text"
             name="pickup_location"
-            placeholder="e.g. Mirpur, Dhaka"
+            defaultValue={food.pickup_location}
             required
             className="input input-bordered w-full"
           />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="font-semibold text-sm mb-1 block">
-              Pickup Start Time
-            </label>
-            <input
-              type="time"
-              name="pickup_start"
-              required
-              className="input input-bordered w-full"
-            />
-          </div>
-
-          <div>
-            <label className="font-semibold text-sm mb-1 block">
-              Pickup End Time
-            </label>
-            <input
-              type="time"
-              name="pickup_end"
-              required
-              className="input input-bordered w-full"
-            />
-          </div>
         </div>
 
         {/* Expire date */}
@@ -263,10 +219,25 @@ const AddFood = () => {
           <input
             type="date"
             name="expire_date"
+            defaultValue={food.expire_date}
             min={today}
             required
             className="input input-bordered w-full"
           />
+        </div>
+
+        {/* Status */}
+        <div>
+          <label className="font-semibold text-sm mb-1 block">Status</label>
+          <select
+            name="status"
+            defaultValue={food.status}
+            className="select select-bordered w-full"
+          >
+            <option value="available">Available</option>
+            <option value="requested">Requested</option>
+            <option value="delivered">Delivered</option>
+          </select>
         </div>
 
         {/* Additional notes */}
@@ -277,21 +248,25 @@ const AddFood = () => {
           <textarea
             name="notes"
             rows={3}
-            placeholder="e.g. Please bring your own food container."
+            defaultValue={food.notes}
             className="textarea textarea-bordered w-full"
           ></textarea>
         </div>
 
         <button
           type="submit"
-          disabled={loading}
-          className="btn font-semibold btn-secondary w-full mt-2"
+          disabled={saving}
+          className="btn btn-secondary w-full mt-2"
         >
-          {loading ? "Adding..." : "Add Food"}
+          {uploading
+            ? "Uploading image..."
+            : saving
+              ? "Saving changes..."
+              : "Update Food"}
         </button>
       </form>
     </div>
   );
 };
 
-export default AddFood;
+export default UpdateFood;
