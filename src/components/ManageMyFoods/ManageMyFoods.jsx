@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import UseAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-// import Swal from "sweetalert2";
 
 const ManageMyFoods = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +25,7 @@ const ManageMyFoods = () => {
         });
       })
       .finally(() => setLoading(false));
-  }, [axiosSecure, user?.email]);
+  }, [axiosSecure, user]);
 
   const handleDelete = (id, foodName) => {
     Swal.fire({

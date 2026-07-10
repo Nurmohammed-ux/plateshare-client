@@ -124,7 +124,7 @@ const Register = () => {
                 </button>
               </div>
             </div>
-            <button className="btn bg-primary-gradient text-white font-semibold text-xl mt-4">
+            <button className="btn btn-secondary text-white font-semibold text-xl mt-4">
               Register
             </button>
             <div className="flex gap-6 items-center my-3">

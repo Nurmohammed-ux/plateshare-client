@@ -98,7 +98,7 @@ const AddFood = () => {
         });
         form.reset();
         setImageFile(null);
-        navigate("/addFood");
+        navigate("/manageMyFoods");
       }
     } catch (err) {
       console.error(err);
