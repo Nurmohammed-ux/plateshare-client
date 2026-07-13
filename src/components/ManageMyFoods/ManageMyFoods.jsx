@@ -15,7 +15,7 @@ const ManageMyFoods = () => {
     if (!user?.email) return;
 
     axiosSecure
-      .get(`/foods?email=${user.email}`)
+      .get(`/myFoods?email=${user.email}`)
       .then((result) => setFoods(result.data))
       .catch(() => {
         Swal.fire({
