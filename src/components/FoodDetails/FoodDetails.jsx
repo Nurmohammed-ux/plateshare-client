@@ -43,7 +43,7 @@ const FoodDetails = () => {
     axiosSecure
       .get(`/foodRequests?foodId=${id}`)
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setRequests(result.data);
       })
       .catch(() => {

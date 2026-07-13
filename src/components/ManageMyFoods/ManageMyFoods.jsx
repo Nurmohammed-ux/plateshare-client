@@ -109,13 +109,11 @@ const ManageMyFoods = () => {
                 <tr key={food._id}>
                   <td>
                     <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <img
-                          className="w-12 h-10 rounded-box"
-                          src={food.food_image}
-                          alt={food.food_name}
-                        />
-                      </div>
+                      <img
+                        className="w-8 h-10 lg:w-12 avatar rounded-box"
+                        src={food.food_image}
+                        alt={food.food_name}
+                      />
                       <p className="font-semibold">{food.food_name}</p>
                     </div>
                   </td>
