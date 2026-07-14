@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <div className="hero bg-base-100 min-h-150 rounded-box">
-      <div className="hero-content w-full max-w-none flex-col justify-between lg:flex-row-reverse gap-12 lg:gap-20 px-4 lg:px-6 py-16 lg:py-24">
+      <div className="hero-content w-full max-w-none flex-col justify-between lg:flex-row-reverse gap-12 lg:gap-20 px-4 lg:px-6 py-10 md:py-16 lg:py-24">
         {/* Hero Image */}
         <motion.img
           src="https://i.ibb.co.com/PZdckWfh/hero-banner.avif"
@@ -29,15 +29,15 @@ const Hero = () => {
           </p>
 
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            Good food finds a{" "}
-            <span className="text-transparent bg-clip-text text-gradient">
-              good home
+            Good <span className="text-gradient">food</span> finds a <br /> good
+            <span className="text-transparent ml-3 bg-clip-text text-gradient">
+              home
             </span>
             , not a bin.
           </h1>
 
           <p className="py-6 text-gray-600 text-base md:text-lg">
-            <span className="text-gradient font-semibold">PlateShare</span>{" "}
+            <span className="text-secondary font-semibold">PlateShare</span>{" "}
             connects neighbours with spare food to the people nearby who can use
             it. Post what you can't finish, find what you need, and collect it
             round the corner before it goes to waste.
