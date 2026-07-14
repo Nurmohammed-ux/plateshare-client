@@ -16,6 +16,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement: <Error />,
     children: [
       { index: true, element: <Home /> },
       { path: "/login", element: <Login /> },
@@ -60,10 +61,6 @@ const router = createBrowserRouter([
             <MyFoodRequests />
           </PrivateRoute>
         ),
-      },
-      {
-        path: "*",
-        element: <Error />,
       },
     ],
   },

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <div className="hero bg-base-100 min-h-150 rounded-box">
-      <div className="hero-content flex-col justify-between lg:flex-row-reverse gap-12 py-16 lg:py-24">
+      <div className="hero-content w-full max-w-none flex-col justify-between lg:flex-row-reverse gap-12 lg:gap-20 px-4 lg:px-6 py-16 lg:py-24">
         {/* Hero Image */}
         <motion.img
           src="https://i.ibb.co.com/PZdckWfh/hero-banner.avif"

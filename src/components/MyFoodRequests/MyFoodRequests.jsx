@@ -162,7 +162,7 @@ const MyFoodRequests = () => {
                       {req.status === "pending" && (
                         <button
                           onClick={() => handleCancel(req._id, req.foodName)}
-                          className="btn btn-sm btn-outline btn-error"
+                          className="btn btn-sm btn-outline btn-error text-black bg-red-400 hover:bg-red-600"
                         >
                           Cancel
                         </button>
