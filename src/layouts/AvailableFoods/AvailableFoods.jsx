@@ -35,7 +35,11 @@ const AvailableFoods = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
+        className="flex flex-col items-center"
       >
+        <p className="badge badge-secondary text-base badge-outline font-semibold mb-3">
+          Browse listings
+        </p>
         <h2 className="text-2xl md:text-3xl text-center pb-10 font-bold leading-tight">
           Available <span className="text-gradient">Foods</span>
         </h2>
