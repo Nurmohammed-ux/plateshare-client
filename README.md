@@ -1,16 +1,10 @@
-# React + Vite
+🍽️ PlateShare
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A community platform for sharing spare food before it goes to waste.
+Post it, find it, collect it.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+📖 About the Project
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+PlateShare connects neighbours with spare food to the people nearby who can use it. Anyone can browse available food, request items they need, and — once logged in — post their own surplus food for others to collect. It's built to make sharing food just as easy as throwing it out, so good food finds a good home instead of a bin.
